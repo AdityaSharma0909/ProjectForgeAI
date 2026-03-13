@@ -2,11 +2,12 @@ from modules.similarity_filter import is_similar
 from groq import Groq
 import json
 import os
+import streamlit as st
+from groq import Groq
 
-# initialize groq client
 
 client = Groq(
-    api_key=os.getenv("GROQ_API_KEY")
+    api_key=st.secrets["GROQ_API_KEY"]
 )
 
 STORAGE_FILE = "storage/generated_ideas.json"
@@ -184,4 +185,5 @@ Research Papers:
         # duplicate protection
         if idea not in previous_ideas and not is_similar(idea, previous_ideas):
             save_idea(idea)
+
             return idea
